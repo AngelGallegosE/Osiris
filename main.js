@@ -58,3 +58,7 @@ app.on('activate', function () {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
+exports.openWindow = () => {
+  let win = new BrowserWindow({width:400, height: 200})
+  win.loadURL(`file://${__dirname}/bear.html`)
+}

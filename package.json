@@ -18,5 +18,10 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "electron": "^1.4.1"
+  },
+  "dependencies": {
+    "phantom": "^4.0.0",
+    "phantomjs": "^2.1.7",
+    "webpage": "^0.3.0"
   }
 }
