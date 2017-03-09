@@ -7,18 +7,27 @@ export default class ToPDF extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      urls: FileStore.getAll(),
-      arrayDomains: FileStore.getAllUrlDomains(),
+      urls: [],
+      arrayDomains:[],
     };
     this.inputChange = this.inputChange.bind(this);
     this.getPDF = this.getPDF.bind(this);
     this.updateUrls = this.updateUrls.bind(this);
-    FileStore.addChangeListener(this.updateUrls)
-    console.log(this.state.domains);
+  }
+
+  componentWillMount(){
+    FileStore.addChangeListener(this.updateUrls);
+    this.setState({
+      urls: FileStore.getAll(),
+      arrayDomains: FileStore.getAllUrlDomains()
+    });
+  }
+
+  componentWillUnmount(){
+    FileStore.removeChangeListener(this.updateUrls);
   }
 
   updateUrls() {
-    console.log('updating...');
     this.setState({
       urls: FileStore.getAll(),
       arrayDomains: FileStore.getAllUrlDomains(),
@@ -30,12 +39,11 @@ export default class ToPDF extends React.Component {
       urls : ev.target.value
     });
   }
+
   getPDF(){
     let array = this.state.urls.split('\n').map((url,index)=>{
       let domainName = pdfFunctions.getDomain(url);
-      //ANTES
       pdfFunctions.toPDF(url).then(()=>{
-        console.log(this.state.arrayDomains[index].status);
         let final = this.state.arrayDomains;
         final[index].status = 1;
         this.setState({
