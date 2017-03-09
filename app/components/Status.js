@@ -1,13 +1,10 @@
 import React from 'react';
+import FileStore from '../stores/FileStore';
 
 export default class Status extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return <div> 
-      hola
+      {this.props.title}
     </div>
   }
 }

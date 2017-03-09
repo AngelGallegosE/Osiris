@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ToPDF from "./ToPDF";
-import Status from "./components/Status";
+import Home from "./container/Home";
 
 class App extends React.Component {
   constructor(props) {
@@ -10,8 +9,7 @@ class App extends React.Component {
 
   render() {
      return <div>
-        <ToPDF />
-        <Status />
+        <Home />
       </div>
   }
 }
