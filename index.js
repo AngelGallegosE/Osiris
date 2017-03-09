@@ -3,14 +3,6 @@ const main = remote.require('./main.js')
 const button = document.createElement('button')
 const phantom = require('phantom');
 
-$(document).ready(() => {
-  $('body').css({background:'red'})
-  $('#pdf').click(()=> {
-    //$('textarea#urls').html($('textarea#urls').html().trim());
-    let array = $('#urls').val().split('\n').map((e)=>toPDF(e));
-  })
-})
-
 async function toPDF(url){
   let progress = $()
   let nameFile = nameF(url);

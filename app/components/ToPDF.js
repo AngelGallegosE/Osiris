@@ -31,12 +31,16 @@ export default class ToPDF extends React.Component {
     });
   }
   getPDF(){
-    let array = this.state.urls.split('\n').map((url)=>{
+    let array = this.state.urls.split('\n').map((url,index)=>{
       let domainName = pdfFunctions.getDomain(url);
       //ANTES
-      console.log(domainName);
       pdfFunctions.toPDF(url).then(()=>{
-        console.log("despues");
+        console.log(this.state.arrayDomains[index].status);
+        let final = this.state.arrayDomains;
+        final[index].status = 1;
+        this.setState({
+          arrayDomains: final
+        })
       })
     });
 
@@ -44,7 +48,7 @@ export default class ToPDF extends React.Component {
   }
 
   render() {
-    let domains = this.state.arrayDomains.map((domain, index) => <Status title={domain} key={index} />);
+    let domains = this.state.arrayDomains.map((domain, index) => <Status title={domain.url} status={domain.status} key={index} />);
     return (
       <div>
         <textarea id="urls" rows="10" onChange={this.inputChange} value={this.state.urls}></textarea>
