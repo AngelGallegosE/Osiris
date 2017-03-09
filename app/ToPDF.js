@@ -17,7 +17,12 @@ export default class ToPDF extends React.Component {
     });
   }
   getPDF(){
-    let array = this.state.urls.split('\n').map((url)=>pdfFunctions.toPDF(url));
+    let array = this.state.urls.split('\n').map((url)=>{
+      console.log("antes");
+      pdfFunctions.toPDF(url).then(()=>{
+        console.log("despues");
+      })
+    });
   }
 
   render() {

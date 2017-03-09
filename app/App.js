@@ -1,15 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import ToPDF from "./ToPDF";
+import Status from "./components/Status";
 
-export class App extends React.Component {
+class App extends React.Component {
   constructor(props) {
     super(props);
   }
 
   render() {
      return <div>
-      <ToPDF />
+        <ToPDF />
+        <Status />
       </div>
   }
 }
