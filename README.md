@@ -4,7 +4,7 @@
 
 This is a minimal Electron based app, where you can get a PDF of a page for every link you have pasted. Every link must be separated by a breakline.
 
-A basic Electron application needs just these files:
+File's description:
 
 - `downloads` - All PDF's are saved here.
 
