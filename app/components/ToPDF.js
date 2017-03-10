@@ -1,6 +1,5 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import Status from "./Status";
+import Status from './Status';
 import FileStore from '../stores/FileStore';
 
 export default class ToPDF extends React.Component {
@@ -41,15 +40,15 @@ export default class ToPDF extends React.Component {
   }
 
   getPDF(){
-    let array = this.state.urls.split('\n').map((url,index)=>{
-      let domainName = pdfFunctions.getDomain(url);
+    this.state.urls.split('\n').map((url,index)=>{
+      pdfFunctions.getDomain(url);
       pdfFunctions.toPDF(url).then(()=>{
         let final = this.state.arrayDomains;
         final[index].status = 1;
         this.setState({
           arrayDomains: final
-        })
-      })
+        });
+      });
     });
 
     FileStore.setAll(this.state.urls);
@@ -63,6 +62,6 @@ export default class ToPDF extends React.Component {
         <button id="pdf" onClick={this.getPDF}>Get PDF(s)</button>
         {domains}
       </div>
-      );
+    );
   }
 }

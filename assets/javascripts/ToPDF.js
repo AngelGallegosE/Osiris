@@ -4,8 +4,7 @@ window.pdfFunctions = (function(){
       const remote = require('electron').remote
       const main = remote.require('./main.js')
       const phantom = require('phantom')
-      let _this = this;
-      
+      let _this = this;     
       let progress = $()
       let nameFile = _this.getDomain(url);
       const instance = await phantom.create();
@@ -16,10 +15,10 @@ window.pdfFunctions = (function(){
       console.log(nameFile)
       await page.render(`./downloads/${nameFile}.pdf`);
       await instance.exit();
-
     },
+    
     getDomain: function(url){
-        return url.slice(url.indexOf('//') + 2, url.indexOf('.com'))
+      return url.slice(url.indexOf('//') + 2, url.indexOf('.com'))
     }     
  }
 })()

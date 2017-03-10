@@ -1,19 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import ToPDF from "../components/ToPDF";
-import Status from "../components/Status";
+import ToPDF from '../components/ToPDF';
 
 export default class App extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-     return <div>
+    return(
+      <div>
         <ToPDF />
       </div>
+    ); 
   }
 }
 
-ReactDOM.render( < App / > ,
-    document.getElementById('content'))
+ReactDOM.render( < App / > , document.getElementById('content'));
