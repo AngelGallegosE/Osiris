@@ -34,7 +34,7 @@ class UrlStore extends EventEmitter {
   }
 
   setAll(urls) {
-    this.urls = urls;
+    this.urls = urls.replace(/ /g,'');
     this.emitChange();
   }
 }
