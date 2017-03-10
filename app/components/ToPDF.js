@@ -42,7 +42,7 @@ export default class ToPDF extends React.Component {
 
   getPDF(){
     this.setState({
-      working: ' Loading page'
+      working: 'Loading page'
     });
     this.state.urls.split('\n').map((url,index)=>{
       pdfFunctions.getDomain(url);
@@ -63,8 +63,11 @@ export default class ToPDF extends React.Component {
     let domains = this.state.arrayDomains.map((domain, index) => <Status title={domain.url} status={domain.status} key={index} working={this.state.working} />);
     return (
       <div>
+        <br/>
         <textarea id="urls" rows="10" onChange={this.inputChange} value={this.state.urls}></textarea>
-        <button id="pdf" onClick={this.getPDF}>Get PDF(s)</button>
+        <br/><br/>
+        <button id="pdf" disabled={this.state.working=='Loading page'} onClick={this.getPDF}>Get PDF(s)</button>
+        <br/><br/>
         {domains}
       </div>
     );
