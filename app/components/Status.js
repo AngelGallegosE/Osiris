@@ -4,7 +4,7 @@ class Status extends React.Component {
   render() {
     return (
       <div> 
-        {this.props.title} - <div className={this.props.status==1 ? 'greenStatus' : 'redStatus'}></div>
+        {this.props.title} - <div className={this.props.status==1 ? 'greenStatus' : 'redStatus'}></div>{this.props.working}
       </div>
     );
   }
@@ -12,7 +12,8 @@ class Status extends React.Component {
 
 Status.propTypes = {
   title: React.PropTypes.string,
-  status: React.PropTypes.number
+  status: React.PropTypes.number,
+  working: React.PropTypes.string
 };
 
 export default Status;

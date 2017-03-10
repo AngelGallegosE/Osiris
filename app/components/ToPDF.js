@@ -8,6 +8,7 @@ export default class ToPDF extends React.Component {
     this.state = {
       urls: [],
       arrayDomains:[],
+      working: '',
     };
     this.inputChange = this.inputChange.bind(this);
     this.getPDF = this.getPDF.bind(this);
@@ -40,13 +41,17 @@ export default class ToPDF extends React.Component {
   }
 
   getPDF(){
+    this.setState({
+      working: ' Loading page'
+    });
     this.state.urls.split('\n').map((url,index)=>{
       pdfFunctions.getDomain(url);
       pdfFunctions.toPDF(url).then(()=>{
         let final = this.state.arrayDomains;
         final[index].status = 1;
         this.setState({
-          arrayDomains: final
+          arrayDomains: final,
+          working: '',
         });
       });
     });
@@ -55,7 +60,7 @@ export default class ToPDF extends React.Component {
   }
 
   render() {
-    let domains = this.state.arrayDomains.map((domain, index) => <Status title={domain.url} status={domain.status} key={index} />);
+    let domains = this.state.arrayDomains.map((domain, index) => <Status title={domain.url} status={domain.status} key={index} working={this.state.working} />);
     return (
       <div>
         <textarea id="urls" rows="10" onChange={this.inputChange} value={this.state.urls}></textarea>
