@@ -1,12 +1,12 @@
 # Osiris
 
-**Clone and run for a quick way to see Osiris in action.**
-
 This is a minimal Electron based app, where you can get a PDF of a page for every link you have pasted. Every link must be separated by a breakline.
 
 File's description:
 
 - `downloads` - All PDF's are saved here.
+
+**Clone and run for a quick way to see Osiris in action.**
 
 ## To Use
 
