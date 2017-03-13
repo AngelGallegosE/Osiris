@@ -74,7 +74,7 @@ export default class ToPDF extends React.Component {
         <div className="buttons">
           <button id="pdf" disabled={this.state.working=='Loading page'} onClick={this.getPDF}>Get PDF(s)</button>
           <button onClick={this.inputClean}>Clean link(s)</button>
-        </div>       
+        </div>
         {domains}
       </div>
     );
