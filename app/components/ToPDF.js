@@ -13,6 +13,7 @@ export default class ToPDF extends React.Component {
     this.inputChange = this.inputChange.bind(this);
     this.getPDF = this.getPDF.bind(this);
     this.updateUrls = this.updateUrls.bind(this);
+    this.inputClean = this.inputClean.bind(this);
   }
 
   componentWillMount(){
@@ -36,10 +37,15 @@ export default class ToPDF extends React.Component {
 
   inputChange(ev){
     this.setState({
-      urls : ev.target.value
+      urls: ev.target.value
     });
   }
 
+  inputClean(){
+    this.setState({
+      urls: []
+    });
+  }
   getPDF(){
     this.setState({
       working: 'Loading page'
@@ -67,7 +73,7 @@ export default class ToPDF extends React.Component {
         </div>
         <div className="buttons">
           <button id="pdf" disabled={this.state.working=='Loading page'} onClick={this.getPDF}>Get PDF(s)</button>
-          <button>qwerty</button>
+          <button onClick={this.inputClean}>Clean link(s)</button>
         </div>       
         {domains}
       </div>
