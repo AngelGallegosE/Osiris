@@ -14,7 +14,7 @@ require('electron-context-menu')({
     visible: params.mediaType === 'image'
   }]
 });
-console.log(__dirname + '/bundle.js');
+
 require('electron-reload')(__dirname + '/bundle.js');
 
 // Keep a global reference of the window object, if you don't, the window will
