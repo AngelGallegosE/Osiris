@@ -61,12 +61,14 @@ export default class ToPDF extends React.Component {
   render() {
     let domains = this.state.arrayDomains.map((domain, index) => <Status title={domain.url} status={domain.status} key={index} working={this.state.working} />);
     return (
-      <div>
-        <br/>
-        <textarea id="urls" rows="10" onChange={this.inputChange} value={this.state.urls}></textarea>
-        <br/><br/>
-        <button id="pdf" disabled={this.state.working=='Loading page'} onClick={this.getPDF}>Get PDF(s)</button>
-        <br/><br/>
+      <div id="container">
+        <div className="links">
+          <textarea id="urls" rows="10" onChange={this.inputChange} value={this.state.urls} className="textarea"></textarea>
+        </div>
+        <div className="buttons">
+          <button id="pdf" disabled={this.state.working=='Loading page'} onClick={this.getPDF}>Get PDF(s)</button>
+          <button>qwerty</button>
+        </div>       
         {domains}
       </div>
     );

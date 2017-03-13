@@ -6,6 +6,7 @@ export default class App extends React.Component {
   render() {
     return(
       <div>
+        <div id="logo"></div>
         <ToPDF />
       </div>
     ); 

@@ -3,7 +3,7 @@ import React from 'react';
 class Status extends React.Component {
   render() {
     return (
-      <div> 
+      <div className="status"> 
         {this.props.title} - <div className={this.props.status==1 ? 'greenStatus' : 'redStatus'}></div>  {this.props.working}
       </div>
     );
