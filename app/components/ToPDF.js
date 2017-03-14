@@ -51,7 +51,7 @@ export default class ToPDF extends React.Component {
       working: 'Loading page'
     });
     this.state.urls.split('\n').map((url,index)=>{
-      pdfFunctions.toPDF(url.replace(/ /g,'')).then(()=>{
+      pdfFunctions.toPDF(url.replace(/ /g,'')).then(() => {
         let final = this.state.arrayDomains;
         final[index].status = 1;
         this.setState({
@@ -74,7 +74,7 @@ export default class ToPDF extends React.Component {
         <div className="buttons">
           <button id="pdf" disabled={this.state.working=='Loading page'} onClick={this.getPDF}>Get PDF(s)</button>
           <button onClick={this.inputClean}>Clean link(s)</button>
-        </div>       
+        </div>
         {domains}
       </div>
     );
