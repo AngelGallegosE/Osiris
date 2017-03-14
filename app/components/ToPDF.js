@@ -46,26 +46,25 @@ export default class ToPDF extends React.Component {
   }
 
   inputClean(){
-    this.setState({
-      urls: []
-    });
+    FileStore.cleanAll();
   }
   getPDF(){
-    this.setState({
-      working: 'Loading page'
-    });
-    this.state.urls.split('\n').map((url,index)=>{
-      pdfFunctions.toPDF(url.replace(/ /g,'')).then(() => {
-        let final = this.state.arrayDomains;
-        final[index].status = 1;
-        this.setState({
-          arrayDomains: final,
-          working: '',
+    if (this.state.urls!='') {
+      this.setState({
+        working: 'Loading page'
+      });
+      this.state.urls.split('\n').map((url, index) => {
+        pdfFunctions.toPDF(url.replace(/ /g, '')).then(() => {
+          let final = this.state.arrayDomains;
+          final[index].status = 1;
+          this.setState({
+            arrayDomains: final,
+            working: '',
+          });
         });
       });
-    });
-
-    FileStore.setAll(this.state.urls);
+      FileStore.setAll(this.state.urls);
+    }
   }
 
   render() {
@@ -77,7 +76,7 @@ export default class ToPDF extends React.Component {
         </div>
         <div className="buttons">
           <button id="pdf" disabled={this.state.working=='Loading page'} onClick={this.getPDF}>Get PDF(s)</button>
-          <button onClick={this.inputClean}>Clean link(s)</button>
+          <button onClick={this.inputClean}>Clear</button>
           
         </div>
         <div>
