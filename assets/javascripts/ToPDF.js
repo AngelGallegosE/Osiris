@@ -21,14 +21,20 @@ window.pdfFunctions = (function(){
       await page.render(`./downloads/${nameFile}.pdf`);
       await instance.exit();
     },
-
-    getDomain: function(url){
-      return url.slice(url.indexOf('//') + 2, url.indexOf('.com'))
-    },
     openShell: function() {
       const pathDownloads = path.join(app.getPath('downloads'), 'Osiris');
       console.log(pathDownloads);
       shell.openExternal(`file://${pathDownloads}`);
+    },
+    getDomain: function (url) {
+      // URL decomposition IDL attributes
+      // http://w3c.github.io/html-reference/a.html
+      const a = document.createElement('a');
+      a.href = url;
+      let final = isNaN(a.pathname.split('/').pop()) ?
+        a.hostname.replace('www.', '') + '/' + a.pathname.split('/').pop() + a.search :
+        a.hostname.replace('www.', '') + '/' + a.search +(a.pathname !== '/' ? a.pathname.replace(/\//g, '-') : 'index')
+      return final;
     }
  }
 })()

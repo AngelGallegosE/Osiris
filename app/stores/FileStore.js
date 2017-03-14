@@ -28,7 +28,7 @@ class UrlStore extends EventEmitter {
   }
 
   getAllUrlDomains(){
-    return this.urls.split('\n').map((url)=> url.slice(url.indexOf('//') + 2, url.indexOf('.com'))).map(url => {
+    return this.urls.split('\n').map(pdfFunctions.getDomain).map(url => {
       return {'url': url,'status':0};
     });
   }
