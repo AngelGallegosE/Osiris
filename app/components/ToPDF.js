@@ -55,7 +55,7 @@ export default class ToPDF extends React.Component {
       working: 'Loading page'
     });
     this.state.urls.split('\n').map((url,index)=>{
-      pdfFunctions.toPDF(url.replace(/ /g,'')).then(()=>{
+      pdfFunctions.toPDF(url.replace(/ /g,'')).then(() => {
         let final = this.state.arrayDomains;
         final[index].status = 1;
         this.setState({
