@@ -61,6 +61,9 @@ button:hover {
 .status{
     padding: 10px 0px 5px 15px;
 }
+.box {
+    display: inline-block;
+}
 #urls {
   width: 100%;
   border-radius: 4px;

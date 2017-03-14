@@ -1,3 +1,10 @@
+const {shell} = require('electron')
+const app = require('electron').remote.app
+const os = require('os');
+const path = require('path');
+
+const pathDownloads = path.join(app.getPath('downloads'), 'Osiris');
+
 window.pdfFunctions = (function(){
   return {
     toPDF: async function(url){
@@ -13,10 +20,13 @@ window.pdfFunctions = (function(){
       const status = await page.open(url);
       console.log(`Page opened with status [${status}].`);
       console.log(nameFile)
-      await page.render(`./downloads/${nameFile}.pdf`);
+      await page.render(path.join(pathDownloads, `${nameFile}.pdf`));
       await instance.exit();
     },
-
+    openShell: function() {
+      console.log(pathDownloads);
+      shell.openExternal(`file://${pathDownloads}`);
+    },
     getDomain: function (url) {
       // URL decomposition IDL attributes
       // http://w3c.github.io/html-reference/a.html
