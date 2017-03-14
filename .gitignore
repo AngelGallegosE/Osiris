@@ -3,3 +3,4 @@ downloads/
 .DS_Store
 bundle.js
 .eslintcache
+.vscode/
