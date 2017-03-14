@@ -1,10 +1,12 @@
+const {shell} = require('electron')
+
 window.pdfFunctions = (function(){
   return {
     toPDF: async function(url){
       const remote = require('electron').remote
       const main = remote.require('./main.js')
       const phantom = require('phantom')
-      let _this = this;     
+      let _this = this;
       let progress = $()
       let nameFile = _this.getDomain(url);
       const instance = await phantom.create();
@@ -16,10 +18,12 @@ window.pdfFunctions = (function(){
       await page.render(`./downloads/${nameFile}.pdf`);
       await instance.exit();
     },
-    
+
     getDomain: function(url){
       return url.slice(url.indexOf('//') + 2, url.indexOf('.com'))
-    }     
+    },
+    openShell: function() {
+      shell.openItem('./downloads/');
+    }
  }
 })()
-   
