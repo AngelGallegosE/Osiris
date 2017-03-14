@@ -1,4 +1,7 @@
 const {shell} = require('electron')
+const app = require('electron').remote.app
+const os = require('os');
+const path = require('path');
 
 window.pdfFunctions = (function(){
   return {
@@ -23,7 +26,9 @@ window.pdfFunctions = (function(){
       return url.slice(url.indexOf('//') + 2, url.indexOf('.com'))
     },
     openShell: function() {
-      shell.openItem('./downloads/');
+      const pathDownloads = path.join(app.getPath('downloads'), 'Osiris');
+      console.log(pathDownloads);
+      shell.openExternal(`file://${pathDownloads}`);
     }
  }
 })()
