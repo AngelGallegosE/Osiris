@@ -3,6 +3,8 @@ const app = require('electron').remote.app
 const os = require('os');
 const path = require('path');
 
+const pathDownloads = path.join(app.getPath('downloads'), 'Osiris');
+
 window.pdfFunctions = (function(){
   return {
     toPDF: async function(url){
@@ -18,11 +20,10 @@ window.pdfFunctions = (function(){
       const status = await page.open(url);
       console.log(`Page opened with status [${status}].`);
       console.log(nameFile)
-      await page.render(`./downloads/${nameFile}.pdf`);
+      await page.render(path.join(pathDownloads, `${nameFile}.pdf`));
       await instance.exit();
     },
     openShell: function() {
-      const pathDownloads = path.join(app.getPath('downloads'), 'Osiris');
       console.log(pathDownloads);
       shell.openExternal(`file://${pathDownloads}`);
     },
