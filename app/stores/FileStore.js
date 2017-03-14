@@ -28,6 +28,9 @@ class UrlStore extends EventEmitter {
   }
 
   getAllUrlDomains(){
+    if(!this.urls) {
+      return [];
+    }
     return this.urls.split('\n').map(pdfFunctions.getDomain).map(url => {
       return {'url': url,'status':0};
     });
@@ -35,6 +38,11 @@ class UrlStore extends EventEmitter {
 
   setAll(urls) {
     this.urls = urls.replace(/ /g,'');
+    this.emitChange();
+  }
+
+  cleanAll(){
+    this.urls = '';
     this.emitChange();
   }
 }
