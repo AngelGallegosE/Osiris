@@ -17,9 +17,17 @@ window.pdfFunctions = (function(){
       await instance.exit();
     },
     
-    getDomain: function(url){
-      return url.slice(url.indexOf('//') + 2, url.indexOf('.com'))
-    }     
+    getDomain: function (url) {
+      // URL decomposition IDL attributes
+      // http://w3c.github.io/html-reference/a.html
+      const a = document.createElement('a');
+      a.href = url;
+      let final = isNaN(a.pathname.split('/').pop()) ?
+        a.hostname.replace('www.', '') + '_' + a.pathname.split('/').pop() + a.search :
+        a.hostname.replace('www.', '') + '_' + a.search + a.pathname
+      final = final.replace(/\//g, '-');;
+      return final;
+    }
  }
 })()
    
