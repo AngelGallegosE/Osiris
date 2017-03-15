@@ -7,6 +7,7 @@ button:focus {
 
 body {
     background-color: #ECF0F1;
+    font-family: 'Helvetica Neue', sans-serif; 
 }
 button {
     -webkit-transition-duration: 0.4s;
@@ -24,6 +25,9 @@ button {
 button:hover {
     background-color: #345FFF;
     color: white;
+}
+.hidden {
+    visibility: hidden;
 }
 .redStatus {
     display: inline-block;
@@ -81,10 +85,15 @@ button:hover {
 }
 #logo > h1{ 
     color: #272F32; 
-    font-family: 'Helvetica Neue', sans-serif; 
     font-size: 75px; 
     font-weight: bold; 
     letter-spacing: -1px; 
     line-height: 1; 
     text-align: center;
+}
+#MainProgressBarContainer{
+    padding: 0.5% 0% 0% 9%;
+}
+#progressBar {
+    width: 90%;
 }
