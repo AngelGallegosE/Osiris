@@ -9,15 +9,17 @@ export default class ToPDF extends React.Component {
       urls: [],
       arrayDomains:[],
       working: '',
+      progressBar: 0,
     };
     this.inputChange = this.inputChange.bind(this);
     this.getPDF = this.getPDF.bind(this);
-    this.updateUrls = this.updateUrls.bind(this);
+    this.updateUrlsAndArrayDomains = this.updateUrlsAndArrayDomains.bind(this);
     this.inputClean = this.inputClean.bind(this);
+    this.setProgressBar = this.setProgressBar.bind(this);
   }
 
   componentWillMount(){
-    FileStore.addChangeListener(this.updateUrls);
+    FileStore.addChangeListener(this.updateUrlsAndArrayDomains);
     this.setState({
       urls: FileStore.getAll(),
       arrayDomains: FileStore.getAllUrlDomains()
@@ -25,13 +27,22 @@ export default class ToPDF extends React.Component {
   }
 
   componentWillUnmount(){
-    FileStore.removeChangeListener(this.updateUrls);
+    FileStore.removeChangeListener(this.updateUrlsAndArrayDomains);
   }
 
-  updateUrls() {
-    this.setState({
-      urls: FileStore.getAll(),
-      arrayDomains: FileStore.getAllUrlDomains(),
+  updateUrlsAndArrayDomains() {
+    return new Promise((res) => {
+      this.setState({
+        urls: FileStore.getAll(),
+        arrayDomains: FileStore.getAllUrlDomains(),
+      }, res);
+    });
+  }
+  updateArrayDomains(){
+    return new Promise((res) =>{
+      this.setState({
+        arrayDomains: FileStore.getAllUrlDomains(),
+      }, res);
     });
   }
 
@@ -45,26 +56,41 @@ export default class ToPDF extends React.Component {
     pdfFunctions.openShell();
   }
 
+  setProgressBar(linksDownloaded, total) {
+    this.setState({
+      progressBar: (linksDownloaded/total*100)
+    });
+  }
+
   inputClean(){
     FileStore.cleanAll();
   }
-  getPDF(){
-    if (this.state.urls!='') {
-      this.setState({
-        working: 'Loading page'
-      });
-      this.state.urls.split('\n').map((url, index) => {
-        pdfFunctions.toPDF(url.replace(/ /g, '')).then(() => {
-          let final = this.state.arrayDomains;
-          final[index].status = 1;
-          this.setState({
-            arrayDomains: final,
-            working: '',
+  getPDF() {
+    this.setState({
+      progressBar: 0,
+    });
+    this.updateArrayDomains().then(() => {
+      const numberOfLineBreaks = (this.state.urls.match(/\n/g)||[]).length +1;
+      let linksDownloaded = 0;
+      if (this.state.urls != '') {
+        this.setState({
+          working: 'Loading page'
+        });
+        this.state.urls.split('\n').map((url, index) => {
+          pdfFunctions.toPDF(url.replace(/ /g, '')).then(() => {
+            let final = this.state.arrayDomains;
+            final[index].status = 1;
+            linksDownloaded++;
+            this.setProgressBar(linksDownloaded, numberOfLineBreaks);
+            this.setState({
+              arrayDomains: final,
+              working: '',
+            });
           });
         });
-      });
-      FileStore.setAll(this.state.urls);
-    }
+        FileStore.setAll(this.state.urls);
+      }
+    });
   }
 
   render() {
@@ -82,6 +108,9 @@ export default class ToPDF extends React.Component {
         <div>
           <div>
             <button onClick={this.openDownloads}>Open Download Folder</button>
+          </div>
+          <div id="progressBarContainer">
+            <progress id="progressBar" value={this.state.progressBar} max="100"></progress>
           </div>
           <div>
             {domains}
