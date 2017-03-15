@@ -26,6 +26,9 @@ button:hover {
     background-color: #345FFF;
     color: white;
 }
+.hidden {
+    visibility: hidden;
+}
 .redStatus {
     display: inline-block;
     position: relative; 
@@ -88,7 +91,7 @@ button:hover {
     line-height: 1; 
     text-align: center;
 }
-#progressBarContainer{
+#MainProgressBarContainer{
     padding: 0.5% 0% 0% 9%;
 }
 #progressBar {

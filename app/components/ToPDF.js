@@ -1,5 +1,6 @@
 import React from 'react';
 import Status from './Status';
+import ProgressBar from './ProgressBar';
 import FileStore from '../stores/FileStore';
 
 export default class ToPDF extends React.Component {
@@ -64,10 +65,13 @@ export default class ToPDF extends React.Component {
 
   inputClean(){
     FileStore.cleanAll();
+    this.setState({
+      progressBar: 0,
+    });
   }
   getPDF() {
     this.setState({
-      progressBar: 0,
+      progressBar: 0.1,
     });
     this.updateArrayDomains().then(() => {
       const numberOfLineBreaks = (this.state.urls.match(/\n/g)||[]).length +1;
@@ -109,9 +113,7 @@ export default class ToPDF extends React.Component {
           <div>
             <button onClick={this.openDownloads}>Open Download Folder</button>
           </div>
-          <div id="progressBarContainer">
-            <progress id="progressBar" value={this.state.progressBar} max="100"></progress>
-          </div>
+          <ProgressBar value={this.state.progressBar} />
           <div>
             {domains}
           </div>
