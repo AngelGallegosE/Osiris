@@ -18,13 +18,10 @@ window.pdfFunctions = (function(){
       const page = await instance.createPage();
       await page.property('viewportSize', {width: 1024, height: 600});
       const status = await page.open(url);
-      //console.log(`Page opened with status [${status}].`);
-      //console.log(nameFile)
       await page.render(path.join(pathDownloads, `${nameFile}.pdf`));
       await instance.exit();
     },
     openShell: function() {
-      //console.log(pathDownloads);
       shell.openExternal(`file://${pathDownloads}`);
     },
     getDomain: function (url) {

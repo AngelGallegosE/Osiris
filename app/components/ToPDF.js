@@ -49,7 +49,6 @@ export default class ToPDF extends React.Component {
   }
   setPDFButtonStatus(state){
     return new Promise((res) =>{
-      //console.log('State: '+state);
       this.setState({
         pdfButtonStatus: state
       }, res);
@@ -78,52 +77,66 @@ export default class ToPDF extends React.Component {
       progressBar: 0,
     });
   }
+
   getPDF() {
+    document.body.classList.add('busy');
+    this.setPDFButtonStatus(false);
     this.setState({
       progressBar: 0.1,
-      pdfButtonStatus: false
     }, () => {
       this.updateArrayDomains();
-      console.log('Get PDF :'+this.state.pdfButtonStatus);
       const numberOfLineBreaks = (this.state.urls.match(/\n/g) || []).length + 1;
       let linksDownloaded = 0;
       if (this.state.urls != '') {
         this.setState({
           working: 'Loading page'
         });
-        this.state.urls.split('\n').map((url, index) => {
-          pdfFunctions.toPDF(url.replace(/ /g, '')).then(() => {
-            let final = this.state.arrayDomains;
-            final[index].status = 1;
-            linksDownloaded++;
-            this.setProgressBar(linksDownloaded, numberOfLineBreaks);
-            this.setState({
-              arrayDomains: final,
-              working: '',
+
+        const promises = this.state.urls.split('\n').map((url, index) => {
+          return new Promise((res) => {
+            pdfFunctions.toPDF(url.replace(/ /g, '')).then(() => {
+              let final = this.state.arrayDomains;
+              final[index].status = 1;
+              linksDownloaded++;
+              this.setProgressBar(linksDownloaded, numberOfLineBreaks);
+              this.setState({
+                arrayDomains: final,
+                working: '',
+              });
+              res();
             });
           });
         });
+
+        Promise.all(promises).then(() => {
+          this.setPDFButtonStatus(true);
+          document.body.classList.remove('busy');
+          new Notification('Ready!', {
+            title: 'Ready',
+            body: 'Your pdfs are ready!'
+          });
+        });
+
         FileStore.setAll(this.state.urls);
       }
-      this.setState({
-        pdfButtonStatus: true
-      }, () => {
-        console.log('Get PDF :'+this.state.pdfButtonStatus);
-      });
+      // this.setState({
+      //   pdfButtonStatus: true
+      // }, () => {
+        
+      // });
     });
   }
 
   render() {
     let domains = this.state.arrayDomains.map((domain, index) => <Status title={domain.url} status={domain.status} key={index} working={this.state.working} />);
     return (
-      <div id="container">
+      <div id="container" >
         <div className="links">
           <textarea id="urls" rows="10" onChange={this.inputChange} value={this.state.urls} className="textarea"></textarea>
         </div>
         <div className="buttons">
-          <button id="pdf" disabled={this.state.working=='Loading page'} onClick={this.getPDF}>Get PDF(s)</button>
+          <button id="pdf" disabled={!this.state.pdfButtonStatus} onClick={this.getPDF}>Get PDF(s)</button>
           <button onClick={this.inputClean}>Clear</button>
-
         </div>
         <div>
           <div>
@@ -134,7 +147,6 @@ export default class ToPDF extends React.Component {
             {domains}
           </div>
         </div>
-
       </div>
     );
   }

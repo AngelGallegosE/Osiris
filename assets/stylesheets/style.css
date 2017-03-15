@@ -7,14 +7,19 @@ button:focus {
 
 body {
     background-color: #ECF0F1;
-    font-family: 'Helvetica Neue', sans-serif; 
+    font-family: 'Helvetica Neue', sans-serif;
 }
+
+body.busy {
+    cursor: progress
+}
+
 button {
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     cursor: pointer;
     text-align: center;
-    vertical-align: top; 
+    vertical-align: top;
     margin: 10px;
     color: #fff;
     border: 0;
@@ -22,59 +27,78 @@ button {
     background: #3498DB;
     padding: 10px 35px;
 }
+
 button:hover {
     background-color: #345FFF;
     color: white;
 }
+
+button:disabled,
+button[disabled] {
+    border: 1px solid #999999;
+    background-color: #cccccc;
+    color: #666666;
+}
+
 .hidden {
     visibility: hidden;
 }
+
 .redStatus {
     display: inline-block;
-    position: relative; 
+    position: relative;
     width: 30px;
     height: 5px;
     background-color: #FF6666;
     border: 2px solid #dddddd;
 }
+
 .greenStatus {
     display: inline-block;
-    position: relative; 
+    position: relative;
     width: 30px;
     height: 5px;
     background-color: green;
     border: 2px solid #dddddd;
 }
+
 .textarea {
-    border: none; 
+    border: none;
     resize: none
 }
-.buttons{
+
+.buttons {
     margin-top: 15px;
     display: inline-block;
-    vertical-align: top; 
+    vertical-align: top;
     width: 30%;
     text-align: center;
 }
-.links{
+
+.links {
     display: inline-block;
     width: 70%;
     padding-left: 15px;
     box-sizing: border-box;
 }
-.status{
+
+.status {
     padding: 10px 0px 5px 15px;
 }
+
 .box {
     display: inline-block;
 }
+
 #urls {
-  width: 100%;
-  border-radius: 4px;
+    width: 100%;
+    border-radius: 4px;
 }
+
 #container {
     margin-top: 8%;
 }
+
 #logo {
     text-align: center;
     background-color: #ECF0F1;
@@ -83,17 +107,20 @@ button:hover {
     width: 50%;
     height: 60px;
 }
-#logo > h1{ 
-    color: #272F32; 
-    font-size: 75px; 
-    font-weight: bold; 
-    letter-spacing: -1px; 
-    line-height: 1; 
+
+#logo>h1 {
+    color: #272F32;
+    font-size: 75px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    line-height: 1;
     text-align: center;
 }
-#MainProgressBarContainer{
+
+#MainProgressBarContainer {
     padding: 0.5% 0% 0% 9%;
 }
+
 #progressBar {
     width: 90%;
 }
