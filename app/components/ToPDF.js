@@ -81,36 +81,36 @@ export default class ToPDF extends React.Component {
   getPDF() {
     this.setState({
       progressBar: 0.1,
-    });
-    this.setPDFButtonStatus(false)
-      .then(this.updateArrayDomains())
-      .then(() => {
-        console.log('Get PDF :'+this.state.pdfButtonStatus);
-        const numberOfLineBreaks = (this.state.urls.match(/\n/g) || []).length + 1;
-        let linksDownloaded = 0;
-        if (this.state.urls != '') {
-          this.setState({
-            working: 'Loading page'
-          });
-          this.state.urls.split('\n').map((url, index) => {
-            pdfFunctions.toPDF(url.replace(/ /g, '')).then(() => {
-              let final = this.state.arrayDomains;
-              final[index].status = 1;
-              linksDownloaded++;
-              this.setProgressBar(linksDownloaded, numberOfLineBreaks);
-              this.setState({
-                arrayDomains: final,
-                working: '',
-              });
+      pdfButtonStatus: false
+    }, () => {
+      this.updateArrayDomains();
+      console.log('Get PDF :'+this.state.pdfButtonStatus);
+      const numberOfLineBreaks = (this.state.urls.match(/\n/g) || []).length + 1;
+      let linksDownloaded = 0;
+      if (this.state.urls != '') {
+        this.setState({
+          working: 'Loading page'
+        });
+        this.state.urls.split('\n').map((url, index) => {
+          pdfFunctions.toPDF(url.replace(/ /g, '')).then(() => {
+            let final = this.state.arrayDomains;
+            final[index].status = 1;
+            linksDownloaded++;
+            this.setProgressBar(linksDownloaded, numberOfLineBreaks);
+            this.setState({
+              arrayDomains: final,
+              working: '',
             });
           });
-          FileStore.setAll(this.state.urls);
-        }
-      })
-      .then(this.setPDFButtonStatus(true))
-      .then(()=>{
+        });
+        FileStore.setAll(this.state.urls);
+      }
+      this.setState({
+        pdfButtonStatus: true
+      }, () => {
         console.log('Get PDF :'+this.state.pdfButtonStatus);
       });
+    });
   }
 
   render() {
@@ -123,7 +123,7 @@ export default class ToPDF extends React.Component {
         <div className="buttons">
           <button id="pdf" disabled={this.state.working=='Loading page'} onClick={this.getPDF}>Get PDF(s)</button>
           <button onClick={this.inputClean}>Clear</button>
-          
+
         </div>
         <div>
           <div>
@@ -134,7 +134,7 @@ export default class ToPDF extends React.Component {
             {domains}
           </div>
         </div>
-        
+
       </div>
     );
   }
