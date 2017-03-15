@@ -11,6 +11,7 @@ export default class ToPDF extends React.Component {
       arrayDomains:[],
       working: '',
       progressBar: 0,
+      pdfButtonStatus: true,
     };
     this.inputChange = this.inputChange.bind(this);
     this.getPDF = this.getPDF.bind(this);
@@ -46,6 +47,14 @@ export default class ToPDF extends React.Component {
       }, res);
     });
   }
+  setPDFButtonStatus(state){
+    return new Promise((res) =>{
+      //console.log('State: '+state);
+      this.setState({
+        pdfButtonStatus: state
+      }, res);
+    });
+  }
 
   inputChange(ev){
     this.setState({
@@ -73,28 +82,35 @@ export default class ToPDF extends React.Component {
     this.setState({
       progressBar: 0.1,
     });
-    this.updateArrayDomains().then(() => {
-      const numberOfLineBreaks = (this.state.urls.match(/\n/g)||[]).length +1;
-      let linksDownloaded = 0;
-      if (this.state.urls != '') {
-        this.setState({
-          working: 'Loading page'
-        });
-        this.state.urls.split('\n').map((url, index) => {
-          pdfFunctions.toPDF(url.replace(/ /g, '')).then(() => {
-            let final = this.state.arrayDomains;
-            final[index].status = 1;
-            linksDownloaded++;
-            this.setProgressBar(linksDownloaded, numberOfLineBreaks);
-            this.setState({
-              arrayDomains: final,
-              working: '',
+    this.setPDFButtonStatus(false)
+      .then(this.updateArrayDomains())
+      .then(() => {
+        console.log('Get PDF :'+this.state.pdfButtonStatus);
+        const numberOfLineBreaks = (this.state.urls.match(/\n/g) || []).length + 1;
+        let linksDownloaded = 0;
+        if (this.state.urls != '') {
+          this.setState({
+            working: 'Loading page'
+          });
+          this.state.urls.split('\n').map((url, index) => {
+            pdfFunctions.toPDF(url.replace(/ /g, '')).then(() => {
+              let final = this.state.arrayDomains;
+              final[index].status = 1;
+              linksDownloaded++;
+              this.setProgressBar(linksDownloaded, numberOfLineBreaks);
+              this.setState({
+                arrayDomains: final,
+                working: '',
+              });
             });
           });
-        });
-        FileStore.setAll(this.state.urls);
-      }
-    });
+          FileStore.setAll(this.state.urls);
+        }
+      })
+      .then(this.setPDFButtonStatus(true))
+      .then(()=>{
+        console.log('Get PDF :'+this.state.pdfButtonStatus);
+      });
   }
 
   render() {
