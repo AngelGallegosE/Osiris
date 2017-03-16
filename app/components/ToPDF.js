@@ -18,6 +18,7 @@ export default class ToPDF extends React.Component {
     this.updateUrlsAndArrayDomains = this.updateUrlsAndArrayDomains.bind(this);
     this.inputClean = this.inputClean.bind(this);
     this.setProgressBar = this.setProgressBar.bind(this);
+    this.textareaOnBlur = this.textareaOnBlur.bind(this);
   }
 
   componentWillMount(){
@@ -71,11 +72,19 @@ export default class ToPDF extends React.Component {
     });
   }
 
-  inputClean(){
+  inputClean() {
     FileStore.cleanAll();
     this.setState({
       progressBar: 0,
     });
+  }
+
+  textareaOnBlur() {
+    FileStore.setAll(this.removeWhitespacesAndEmptyLines(this.state.urls));
+  }
+
+  removeWhitespacesAndEmptyLines(urls) {
+    return urls.split('\n').map(e=>e.replace(/ /g, '')).filter(e=>e!=='').join('\n');
   }
 
   getPDF() {
@@ -132,11 +141,11 @@ export default class ToPDF extends React.Component {
     return (
       <div id="container" >
         <div className="links">
-          <textarea id="urls" rows="10" onChange={this.inputChange} value={this.state.urls} className="textarea"></textarea>
+          <textarea id="urls" rows="10" onBlur={this.textareaOnBlur} onChange={this.inputChange} value={this.state.urls} className="textarea"></textarea>
         </div>
         <div className="buttons">
           <button id="pdf" disabled={!this.state.pdfButtonStatus} onClick={this.getPDF}>Get PDF(s)</button>
-          <button onClick={this.inputClean}>Clear</button>
+          <button onClick={this.inputClean} disabled={!this.state.pdfButtonStatus}>Clear</button>
         </div>
         <div>
           <div>
