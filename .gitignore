@@ -4,3 +4,7 @@ downloads/
 bundle.js
 .eslintcache
 .vscode/
+# Logs
+logs
+*.log
+npm-debug.log*
