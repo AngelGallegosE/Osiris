@@ -42,11 +42,14 @@
     "babelify": "^7.3.0",
     "browserify": "^14.1.0",
     "electron-context-menu": "^0.8.0",
+    "menubar": "^5.2.3",
     "phantom": "^4.0.0",
     "phantomjs-prebuilt": "^2.1.14",
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "uuid": "^3.0.1",
+    "vue": "^2.2.4",
+    "walk": "^2.3.9",
     "webpage": "^0.3.0"
   }
 }

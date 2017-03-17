@@ -6,6 +6,23 @@ const BrowserWindow = electron.BrowserWindow;
 
 const path = require('path');
 const url = require('url');
+const menubar = require('menubar');
+const mb = menubar({
+  app: app,
+  window: BrowserWindow,
+  dir: __dirname,
+  index: 'file://' + __dirname + '/menubar.html',
+  width: 200,
+  showDockIcon: true
+});
+
+// console.log(mb);
+
+// mb.on('ready', function ready () {
+//   console.log('app is ready')
+//   // your app code here
+//   console.log('file://' + __dirname + '/index.html');
+// })
 
 require('electron-context-menu')({
   prepend: (params) => [{

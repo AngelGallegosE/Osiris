@@ -1,0 +1,30 @@
+body {
+  background-color: white;
+  font-family: 'Helvetica Neue', sans-serif;
+}
+
+li {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+li:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#menubar {
+  width: 200px;
+}
+
+.bottom {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
