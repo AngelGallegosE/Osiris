@@ -148,16 +148,16 @@ export default class ToPDF extends React.Component {
         <div className="links">
           <textarea id="urls" rows="10" onBlur={this.textareaOnBlur} onChange={this.inputChange} value={this.state.urls} className="textarea"></textarea>
         </div>
-        <div className="buttons">
+        <div className="buttons unselectable">
           <button id="pdf" disabled={!this.state.pdfButtonStatus} onClick={this.getPDF}><i className="fa fa-download" aria-hidden="true"></i> Get pdf</button>
           <button onClick={this.inputClean} disabled={!this.state.pdfButtonStatus}><i className="fa fa-eraser" aria-hidden="true"></i> Clear</button>
         </div>
         <div>
-          <div>
+          <div className="unselectable">
             <button onClick={this.openDownloads}><i className="fa fa-folder-open" aria-hidden="true"></i> Open Download Folder</button>
           </div>
           <ProgressBar value={this.state.progressBar} />
-          <div>
+          <div className="linkStatus">
             {domains}
           </div>
         </div>
