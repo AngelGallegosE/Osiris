@@ -24,6 +24,9 @@ window.pdfFunctions = (function(){
     openShell: function() {
       shell.openExternal(`file://${pathDownloads}`);
     },
+    openURL: function(link) {
+      shell.openExternal(link)
+    },
     getDomain: function (url) {
       // URL decomposition IDL attributes
       // http://w3c.github.io/html-reference/a.html

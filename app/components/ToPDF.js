@@ -142,7 +142,7 @@ export default class ToPDF extends React.Component {
   }
 
   render() {
-    let domains = this.state.arrayDomains.map((domain, index) => <Status title={domain.url} status={domain.status} progressBar={this.state.progressBar} key={index} working={this.state.working} validUrl={this.isValidURL(this.state.urls.split('\n')[index])} />);
+    let domains = this.state.arrayDomains.map((domain, index) => <Status title={domain.url} status={domain.status} progressBar={this.state.progressBar} key={index} working={this.state.working} validUrl={this.isValidURL(this.state.urls.split('\n')[index])} url={this.state.urls.split('\n')[index]} />);
     return (
       <div id="container" >
         <div className="links">
