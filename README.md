@@ -18,10 +18,8 @@ git clone https://github.com/AngelGallegosE/Osiris.git
 cd Osiris
 # Install dependencies
 npm install
-# Run watchify
-npm run watch
-# Run the app
-npm start
+# Run the app and start watcher
+npm run dev
 ```
 
 #### License [CC0 1.0 (Public Domain)](LICENSE.md)
