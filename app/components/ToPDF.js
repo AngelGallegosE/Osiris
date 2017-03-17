@@ -7,7 +7,7 @@ export default class ToPDF extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      urls: [],
+      urls: '',
       arrayDomains:[],
       working: '',
       progressBar: 0,
@@ -19,6 +19,7 @@ export default class ToPDF extends React.Component {
     this.inputClean = this.inputClean.bind(this);
     this.setProgressBar = this.setProgressBar.bind(this);
     this.textareaOnBlur = this.textareaOnBlur.bind(this);
+    this.isValidURL = this.isValidURL.bind(this);
   }
 
   componentWillMount(){
@@ -58,6 +59,9 @@ export default class ToPDF extends React.Component {
 
   inputChange(ev){
     this.setState({
+      progressBar: 0,
+    });
+    this.setState({
       urls: ev.target.value
     });
   }
@@ -83,6 +87,12 @@ export default class ToPDF extends React.Component {
     FileStore.setAll(this.removeWhitespacesAndEmptyLines(this.state.urls));
   }
 
+  isValidURL(str) {
+    let a = document.createElement('a');
+    a.href = str;
+    return (a.host && a.host != window.location.host);
+  }
+
   removeWhitespacesAndEmptyLines(urls) {
     return urls.split('\n').map(e=>e.replace(/ /g, '')).filter(e=>e!=='').join('\n');
   }
@@ -94,14 +104,14 @@ export default class ToPDF extends React.Component {
       progressBar: 0.1,
     }, () => {
       this.updateArrayDomains();
-      const numberOfLineBreaks = (this.state.urls.match(/\n/g) || []).length + 1;
+      const numberOfLineBreaks = (this.state.urls.match(/\n/g).filter(e=>this.isValidURL(e)) || []).length + 1;
       let linksDownloaded = 0;
       if (this.state.urls != '') {
         this.setState({
           working: 'Loading page'
         });
 
-        const promises = this.state.urls.split('\n').map((url, index) => {
+        const promises = this.state.urls.split('\n').filter(url => this.isValidURL(url)).map((url, index) => {
           return new Promise((res) => {
             pdfFunctions.toPDF(url.replace(/ /g, '')).then(() => {
               let final = this.state.arrayDomains;
@@ -128,28 +138,23 @@ export default class ToPDF extends React.Component {
 
         FileStore.setAll(this.state.urls);
       }
-      // this.setState({
-      //   pdfButtonStatus: true
-      // }, () => {
-        
-      // });
     });
   }
 
   render() {
-    let domains = this.state.arrayDomains.map((domain, index) => <Status title={domain.url} status={domain.status} key={index} working={this.state.working} />);
+    let domains = this.state.arrayDomains.map((domain, index) => <Status title={domain.url} status={domain.status} progressBar={this.state.progressBar} key={index} working={this.state.working} validUrl={this.isValidURL(this.state.urls.split('\n')[index])} />);
     return (
       <div id="container" >
         <div className="links">
           <textarea id="urls" rows="10" onBlur={this.textareaOnBlur} onChange={this.inputChange} value={this.state.urls} className="textarea"></textarea>
         </div>
         <div className="buttons">
-          <button id="pdf" disabled={!this.state.pdfButtonStatus} onClick={this.getPDF}>Get PDF(s)</button>
-          <button onClick={this.inputClean} disabled={!this.state.pdfButtonStatus}>Clear</button>
+          <button id="pdf" disabled={!this.state.pdfButtonStatus} onClick={this.getPDF}><i className="fa fa-download" aria-hidden="true"></i> Get pdf</button>
+          <button onClick={this.inputClean} disabled={!this.state.pdfButtonStatus}><i className="fa fa-eraser" aria-hidden="true"></i> Clear</button>
         </div>
         <div>
           <div>
-            <button onClick={this.openDownloads}>Open Download Folder</button>
+            <button onClick={this.openDownloads}><i className="fa fa-folder-open" aria-hidden="true"></i> Open Download Folder</button>
           </div>
           <ProgressBar value={this.state.progressBar} />
           <div>
