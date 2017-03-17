@@ -4,7 +4,7 @@ This is a minimal Electron based app, where you can get a PDF of a page for ever
 
 File's description:
 
-- `downloads` - All PDF's are saved here.
+ All PDF's are saved in you Downloads folder.
 
 ## To Use
 **Clone and run for a quick way to see Osiris in action.**
