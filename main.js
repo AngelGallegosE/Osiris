@@ -23,12 +23,12 @@ let mainWindow;
 
 function createWindow () {
   // Create the browser window.
+
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
-    resizable: false,
+    resizable: true,
     title: 'Osiris',
-    fullscreenable: false,
   });
 
   // and load the index.html of the app.

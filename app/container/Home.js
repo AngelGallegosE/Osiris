@@ -6,7 +6,7 @@ export default class App extends React.Component {
   render() {
     return(
       <div>
-        <div id="logo"><h1>Osiris</h1></div>
+        <div id="logo" className='unselectable'><h1>Osiris</h1></div>
         <ToPDF />
       </div>
     ); 
