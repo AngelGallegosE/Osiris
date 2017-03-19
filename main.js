@@ -1,8 +1,5 @@
 const electron = require('electron');
-// Module to control application life.
-const app = electron.app;
-// Module to create native browser window.
-const BrowserWindow = electron.BrowserWindow;
+const {app, Menu, BrowserWindow, shell} = require('electron');
 
 const path = require('path');
 const url = require('url');
@@ -30,6 +27,17 @@ function createWindow () {
     resizable: true,
     title: 'Osiris',
   });
+
+  const dockMenu = Menu.buildFromTemplate([
+    {
+      label: 'Open Download Folder',
+      click: () => {
+        shell.openExternal(`file://${path.join(app.getPath('downloads'), 'Osiris')}`);
+      }
+    },
+  ]);
+
+  app.dock.setMenu(dockMenu);
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -72,6 +80,29 @@ app.on('activate', function () {
   }
 });
 
+<<<<<<< Updated upstream
+=======
+app.on('setProgressBar', function(progress) {
+  mainWindow.setProgressBar(progress || -1);
+});
+
+app.on('open-file', function(_, file) {
+  shell.openExternal(`file://${file}`);
+});
+
+
+const dockMenu = Menu.buildFromTemplate([
+  {
+    label: 'Open Download Folder',
+    click: () => {
+      shell.openExternal(`file://${path.join(app.getPath('downloads'), 'Osiris')}`);
+    }
+  },
+]);
+
+app.dock.setMenu(dockMenu);
+
+>>>>>>> Stashed changes
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
 // exports.openWindow = () => {
