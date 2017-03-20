@@ -26,7 +26,10 @@ window.pdfFunctions = (function(){
       shell.openExternal(`file://${pathDownloads}`);
     },
     openURL: function(link) {
-      shell.openExternal(link)
+      shell.openExternal(link);
+    },
+    setProgressBar: function(progress) {
+      app.emit('setProgressBar', progress);
     },
     getDomain: function (url) {
       // URL decomposition IDL attributes
@@ -35,7 +38,7 @@ window.pdfFunctions = (function(){
       a.href = url;
       let final = isNaN(a.pathname.split('/').pop()) ?
         a.hostname.replace('www.', '') + '/' + a.pathname.split('/').pop() + a.search :
-        a.hostname.replace('www.', '') + '/' + a.search +(a.pathname !== '/' ? a.pathname.replace(/\//g, '-') : 'index')
+        a.hostname.replace('www.', '') + '/' + a.search +(a.pathname !== '/' ? a.pathname.replace(/\//g, '-') : 'index');
       return final;
     }
  }

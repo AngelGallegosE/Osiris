@@ -71,6 +71,7 @@ export default class ToPDF extends React.Component {
   }
 
   setProgressBar(linksDownloaded, total) {
+    pdfFunctions.setProgressBar(linksDownloaded/total);
     this.setState({
       progressBar: (linksDownloaded/total*100)
     });
@@ -81,6 +82,7 @@ export default class ToPDF extends React.Component {
     this.setState({
       progressBar: 0,
     });
+    pdfFunctions.setProgressBar(0);
   }
 
   textareaOnBlur() {
@@ -105,6 +107,7 @@ export default class ToPDF extends React.Component {
   getPDF() {
     document.body.classList.add('busy');
     this.setPDFButtonStatus(false);
+    pdfFunctions.setProgressBar(0.001);
     this.setState({
       progressBar: 0.1,
     }, () => {

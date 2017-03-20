@@ -80,6 +80,10 @@ app.on('activate', function () {
   }
 });
 
+app.on('setProgressBar', function(progress) {
+  mainWindow.setProgressBar(progress || -1);
+});
+
 app.on('open-file', function(_, file) {
   shell.openExternal(`file://${file}`);
 });
