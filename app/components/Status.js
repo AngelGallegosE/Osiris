@@ -10,7 +10,7 @@ const Status = ({url, title, validUrl, working, status, progressBar}) => (
       }
     </a> 
     <div className={progressBar!==0?status==1 ? 'greenStatus' : 'redStatus':''}></div>
-    {validUrl?working:''}
+    {validUrl && progressBar!==0 && status===0? 'Loading Page':''}
   </div>
 );
 
