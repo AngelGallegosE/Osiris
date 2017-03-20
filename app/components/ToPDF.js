@@ -85,6 +85,11 @@ export default class ToPDF extends React.Component {
 
   textareaOnBlur() {
     FileStore.setAll(this.removeWhitespacesAndEmptyLines(this.state.urls));
+    if (this.state.progressBar === 100) {
+      this.setState({
+        progressBar: 0
+      });
+    }
   }
 
   isValidURL(str) {

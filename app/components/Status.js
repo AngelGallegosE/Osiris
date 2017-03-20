@@ -20,5 +20,4 @@ Status.propTypes = {
   validUrl: React.PropTypes.bool,
   progressBar: React.PropTypes.number,
 };
-
 export default Status;
