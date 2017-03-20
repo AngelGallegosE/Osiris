@@ -106,13 +106,13 @@ export default class ToPDF extends React.Component {
     return urls.split('\n').map(e=>e.replace(/ /g, '')).filter(e=>e!=='').join('\n');
   }
 
-  getPDF() {
+  async getPDF() {
     document.body.classList.add('busy');
     this.setPDFButtonStatus(false);
     pdfFunctions.setProgressBar(0.001);
     this.setState({
       progressBar: 0.1,
-    }, () => {
+    }, async () => {
       this.updateArrayDomains();
       const numberOfValidUrls = this.state.urls.split('\n').filter(e=>this.isValidURL(e)).length;
       let linksDownloaded = 0;
@@ -122,28 +122,26 @@ export default class ToPDF extends React.Component {
         });
 
         const promises = this.state.urls.split('\n').filter(url => this.isValidURL(url)).map((url, index) => {
-          return new Promise((res) => {
-            pdfFunctions.toPDF(url.replace(/ /g, '')).then(() => {
-              let final = this.state.arrayDomains;
-              final[index].status = 1;
-              linksDownloaded++;
-              this.setProgressBar(linksDownloaded, numberOfValidUrls);
-              this.setState({
-                arrayDomains: final,
-                working: '',
-              });
-              res();
+          return new Promise(async (res) => {
+            await pdfFunctions.toPDF(url.replace(/ /g, ''))
+            let final = this.state.arrayDomains;
+            final[index].status = 1;
+            linksDownloaded++;
+            this.setProgressBar(linksDownloaded, numberOfValidUrls);
+            this.setState({
+              arrayDomains: final,
+              working: '',
             });
+            res();
           });
         });
 
-        Promise.all(promises).then(() => {
-          this.setPDFButtonStatus(true);
-          document.body.classList.remove('busy');
-          new Notification('Ready!', {
-            title: 'Ready',
-            body: 'Your pdfs are ready!'
-          });
+        await Promise.all(promises);
+        this.setPDFButtonStatus(true);
+        document.body.classList.remove('busy');
+        new Notification('Ready!', {
+          title: 'Ready',
+          body: 'Your pdfs are ready!'
         });
 
         FileStore.setAll(this.state.urls);
