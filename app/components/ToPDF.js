@@ -61,6 +61,7 @@ export default class ToPDF extends React.Component {
     this.setState({
       progressBar: 0,
     });
+    pdfFunctions.setProgressBar(0);
     this.setState({
       urls: ev.target.value
     });
@@ -91,6 +92,7 @@ export default class ToPDF extends React.Component {
       this.setState({
         progressBar: 0
       });
+      pdfFunctions.setProgressBar(0);
     }
   }
 
