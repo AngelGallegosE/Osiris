@@ -1,16 +1,18 @@
 import React from 'react';
 
-class Status extends React.Component {
-  render() {
-    return (
-      <div className="status unselectable"> 
-        <a href="#" onClick={() => {pdfFunctions.openURL(this.props.url)}}>{this.props.title}- {this.props.validUrl?<i data-tooltip='Valid Link' className="fa fa-check greenIconColor" aria-hidden="true"> </i>:<i data-tooltip='Invalid Link' className="fa fa-ban redIconColor" aria-hidden="true"> </i>} </a> 
-        <div className={this.props.progressBar!==0?this.props.status==1 ? 'greenStatus' : 'redStatus':''}></div>  
-        {this.props.validUrl?this.props.working:''}
-      </div>
-    );
-  }
-}
+const Status = ({url, title, validUrl, working, status, progressBar}) => (
+  <div className="status unselectable">
+    <a href="#" onClick={() => { pdfFunctions.openURL(url); }}>
+      {title} - 
+      {validUrl?
+        <i data-tooltip='Valid Link' className="fa fa-check greenIconColor" aria-hidden="true"> </i>:
+        <i data-tooltip='Invalid Link' className="fa fa-ban redIconColor" aria-hidden="true"> </i>
+      }
+    </a> 
+    <div className={progressBar!==0?status==1 ? 'greenStatus' : 'redStatus':''}></div>
+    {validUrl?working:''}
+  </div>
+);
 
 Status.propTypes = {
   title: React.PropTypes.string,
