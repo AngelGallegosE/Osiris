@@ -105,7 +105,6 @@ export default class ToPDF extends React.Component {
     }, () => {
       this.updateArrayDomains();
       const numberOfValidUrls = this.state.urls.split('\n').filter(e=>this.isValidURL(e)).length;
-      console.log(numberOfValidUrls);
       let linksDownloaded = 0;
       if (this.state.urls != '') {
         this.setState({
