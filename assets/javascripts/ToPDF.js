@@ -1,26 +1,26 @@
-const {shell} = require('electron')
-const app = require('electron').remote.app
-const os = require('os');
+const {shell} = require('electron');
+const app = require('electron').remote.app;
 const path = require('path');
+const phantom = require('phantom');
 
 const pathDownloads = path.join(app.getPath('downloads'), 'Osiris');
 
 window.pdfFunctions = (function(){
   return {
-    toPDF: async function(url){
-      const remote = require('electron').remote
-      const main = remote.require('./main.js')
-      const phantom = require('phantom')
-      let _this = this;
-      let progress = $()
-      let nameFile = _this.getDomain(url);
-      const instance = await phantom.create();
+    instance: null,
+    toPDF: async function(url) {
+      let nameFile = this.getDomain(url);
+      const {instance} = this;
       const page = await instance.createPage();
       await page.property('viewportSize', {width: 1024, height: 600});
-      const status = await page.open(url);
       await page.render(path.join(pathDownloads, `${nameFile}.pdf`));
       app.addRecentDocument(path.join(pathDownloads, `${nameFile}.pdf`));
-      await instance.exit();
+    },
+    initialiceInstance: async function() {
+      this.instance = await phantom.create();
+    },
+    destroyInstance: async function() {
+      this.instance && this.instance.exit();
     },
     openShell: function() {
       shell.openExternal(`file://${pathDownloads}`);
@@ -41,5 +41,5 @@ window.pdfFunctions = (function(){
         a.hostname.replace('www.', '') + '/' + a.search +(a.pathname !== '/' ? a.pathname.replace(/\//g, '-') : 'index');
       return final;
     }
- }
-})()
+  };
+})();

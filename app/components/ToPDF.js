@@ -121,10 +121,12 @@ export default class ToPDF extends React.Component {
           working: 'Loading page'
         });
 
+        await pdfFunctions.initialiceInstance();
+
         const promises = this.state.urls.split('\n').filter(url => this.isValidURL(url)).map((url, index) => {
           return new Promise(async (res) => {
-            await pdfFunctions.toPDF(url.replace(/ /g, ''))
-            let final = this.state.arrayDomains;
+            await pdfFunctions.toPDF(url.replace(/ /g, ''));
+            const final = this.state.arrayDomains;
             final[index].status = 1;
             linksDownloaded++;
             this.setProgressBar(linksDownloaded, numberOfValidUrls);
@@ -145,6 +147,7 @@ export default class ToPDF extends React.Component {
         });
 
         FileStore.setAll(this.state.urls);
+        await pdfFunctions.destroyInstance();
       }
     });
   }
