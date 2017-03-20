@@ -35,6 +35,7 @@ button {
     padding: 10px 35px;
 }
 *[data-tooltip] {
+    position: relative;
 }
 
 *[data-tooltip]::after {
