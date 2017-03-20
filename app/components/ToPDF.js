@@ -85,6 +85,11 @@ export default class ToPDF extends React.Component {
 
   textareaOnBlur() {
     FileStore.setAll(this.removeWhitespacesAndEmptyLines(this.state.urls));
+    if (this.state.progressBar === 100) {
+      this.setState({
+        progressBar: 0
+      });
+    }
   }
 
   isValidURL(str) {
@@ -104,7 +109,7 @@ export default class ToPDF extends React.Component {
       progressBar: 0.1,
     }, () => {
       this.updateArrayDomains();
-      const numberOfLineBreaks = (this.state.urls.match(/\n/g).filter(e=>this.isValidURL(e)) || []).length + 1;
+      const numberOfValidUrls = this.state.urls.split('\n').filter(e=>this.isValidURL(e)).length;
       let linksDownloaded = 0;
       if (this.state.urls != '') {
         this.setState({
@@ -117,7 +122,7 @@ export default class ToPDF extends React.Component {
               let final = this.state.arrayDomains;
               final[index].status = 1;
               linksDownloaded++;
-              this.setProgressBar(linksDownloaded, numberOfLineBreaks);
+              this.setProgressBar(linksDownloaded, numberOfValidUrls);
               this.setState({
                 arrayDomains: final,
                 working: '',

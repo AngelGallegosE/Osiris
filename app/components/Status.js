@@ -2,7 +2,13 @@ import React from 'react';
 
 const Status = ({url, title, validUrl, working, status, progressBar}) => (
   <div className="status unselectable">
-    <a href="#" onClick={() => { pdfFunctions.openURL(url); }}>{title}</a> - {validUrl?<i data-tooltip='Valid Link' className="fa fa-check greenIconColor" aria-hidden="true"> </i>:<i data-tooltip='Invalid Link' className="fa fa-ban redIconColor" aria-hidden="true"> </i>}
+    <a href="#" onClick={() => { pdfFunctions.openURL(url); }}>
+      {title} - 
+      {validUrl?
+        <i data-tooltip='Valid Link' className="fa fa-check greenIconColor" aria-hidden="true"> </i>:
+        <i data-tooltip='Invalid Link' className="fa fa-ban redIconColor" aria-hidden="true"> </i>
+      }
+    </a> 
     <div className={progressBar!==0?status==1 ? 'greenStatus' : 'redStatus':''}></div>
     {validUrl?working:''}
   </div>
@@ -16,5 +22,4 @@ Status.propTypes = {
   validUrl: React.PropTypes.bool,
   progressBar: React.PropTypes.number,
 };
-
 export default Status;
