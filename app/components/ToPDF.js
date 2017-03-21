@@ -110,10 +110,10 @@ export default class ToPDF extends React.Component {
     document.body.classList.add('busy');
     this.setPDFButtonStatus(false);
     pdfFunctions.setProgressBar(0.001);
+    this.updateArrayDomains();
     this.setState({
       progressBar: 0.1,
     }, async () => {
-      this.updateArrayDomains();
       const numberOfValidUrls = this.state.urls.split('\n').filter(e=>this.isValidURL(e)).length;
       let linksDownloaded = 0;
       if (this.state.urls != '') {
@@ -126,15 +126,16 @@ export default class ToPDF extends React.Component {
         const promises = this.state.urls.split('\n').filter(url => this.isValidURL(url)).map((url, index) => {
           return new Promise(async (res) => {
             await pdfFunctions.toPDF(url.replace(/ /g, ''));
-            const final = this.state.arrayDomains;
-            final[index].status = 1;
-            linksDownloaded++;
-            this.setProgressBar(linksDownloaded, numberOfValidUrls);
-            this.setState({
-              arrayDomains: final,
-              working: '',
-            });
-            res();
+            this.setState((prevState) => {
+              const final = prevState.arrayDomains;
+              final[index].status = 1;
+              linksDownloaded++;
+              this.setProgressBar(linksDownloaded, numberOfValidUrls);
+              return {
+                arrayDomains: final,
+                working: '',
+              };
+            }, res);
           });
         });
 
@@ -146,7 +147,6 @@ export default class ToPDF extends React.Component {
           body: 'Your pdfs are ready!'
         });
 
-        FileStore.setAll(this.state.urls);
         await pdfFunctions.destroyInstance();
       }
     });

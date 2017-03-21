@@ -13,6 +13,7 @@ window.pdfFunctions = (function(){
       const {instance} = this;
       const page = await instance.createPage();
       await page.property('viewportSize', {width: 1024, height: 600});
+      const status = await page.open(url);
       await page.render(path.join(pathDownloads, `${nameFile}.pdf`));
       app.addRecentDocument(path.join(pathDownloads, `${nameFile}.pdf`));
     },
