@@ -1,8 +1,10 @@
 const electron = require('electron');
 const {app, Menu, BrowserWindow, shell} = require('electron');
+const PDFWindow = require('electron-pdf-window');
 
 const path = require('path');
 const url = require('url');
+
 
 require('electron-context-menu')({
   prepend: (params) => [{
@@ -64,6 +66,17 @@ function createWindow () {
 // Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
 
+app.on('previewWindow', (location) => {
+  console.log(location);
+  const win = new PDFWindow({
+    width: 400,
+    height: 500
+  });
+  PDFWindow.addSupport(win);
+  
+  console.log(location);
+  win.loadURL(location);
+});
 // Quit when all windows are closed.
 app.on('window-all-closed', function () {
   // On OS X it is common for applications and their menu bar

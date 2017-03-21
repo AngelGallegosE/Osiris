@@ -33,6 +33,11 @@ window.pdfFunctions = (function(){
     setProgressBar: function(progress) {
       app.emit('setProgressBar', progress);
     },
+    previewWindow: function(location) {
+      location = this.getDomain(location);
+      //app.emit('previewWindow', location);
+      app.emit('previewWindow', `file://${pathDownloads}/${location}.pdf`);
+    },
     getDomain: function (url) {
       // URL decomposition IDL attributes
       // http://w3c.github.io/html-reference/a.html
