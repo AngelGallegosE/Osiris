@@ -67,14 +67,12 @@ function createWindow () {
 app.on('ready', createWindow);
 
 app.on('previewWindow', (location) => {
-  console.log(location);
   const win = new PDFWindow({
     width: 400,
     height: 500
   });
   PDFWindow.addSupport(win);
-  
-  console.log(location);
+
   win.loadURL(location);
 });
 // Quit when all windows are closed.
