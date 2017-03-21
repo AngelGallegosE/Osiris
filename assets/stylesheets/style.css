@@ -40,10 +40,7 @@ button {
 
 *[data-tooltip]::after {
     content: attr(data-tooltip);
-
-    position: absolute;
-    top: -20px;
-    right: -20px;
+    position: fixed;
     width: 50px;
 
     pointer-events: none;
@@ -144,9 +141,6 @@ button[disabled] {
     -moz-user-select: none;
     -ms-user-select: none;
     user-select: none;
-}
-.tooltip {
-    position: fixed;
 }
 #urls {
     width: 100%;
