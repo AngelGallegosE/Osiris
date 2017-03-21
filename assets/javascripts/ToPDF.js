@@ -1,6 +1,7 @@
 const {shell} = require('electron');
 const app = require('electron').remote.app;
 const path = require('path');
+const fs = require('fs');
 const phantom = require('phantom');
 
 const pathDownloads = path.join(app.getPath('downloads'), 'Osiris');
@@ -13,7 +14,7 @@ window.pdfFunctions = (function(){
       const {instance} = this;
       const page = await instance.createPage();
       await page.property('viewportSize', {width: 1024, height: 600});
-      const status = await page.open(url);
+      await page.open(url);
       await page.render(path.join(pathDownloads, `${nameFile}.pdf`));
       app.addRecentDocument(path.join(pathDownloads, `${nameFile}.pdf`));
     },
@@ -46,6 +47,15 @@ window.pdfFunctions = (function(){
         a.hostname.replace('www.', '') + '/' + a.pathname.split('/').pop() + a.search :
         a.hostname.replace('www.', '') + '/' + a.search +(a.pathname !== '/' ? a.pathname.replace(/\//g, '-') : 'index');
       return final;
+    },
+    readFile: async function(path) {
+      const readPromise = new Promise((res) => {
+        fs.readFile(path, 'utf8', (err, data) => {
+          res(data);
+        });
+      });
+      const data = await Promise.resolve(readPromise);
+      return data;
     }
   };
 })();
