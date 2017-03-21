@@ -2,7 +2,7 @@ import React from 'react';
 
 const Status = ({url, title, validUrl, working, status, progressBar}) => (
   <div className="status unselectable">
-    <a href="#" onClick={() => { pdfFunctions.openURL(url); }}>
+    <a href="#" onMouseOver={() => { }} onClick={() => { pdfFunctions.openURL(url); }}>
       {title} 
     </a> - 
     {validUrl?
@@ -11,6 +11,12 @@ const Status = ({url, title, validUrl, working, status, progressBar}) => (
     }
     <div className={progressBar!==0?status==1 ? 'greenStatus' : 'redStatus':''}></div>
     {validUrl && progressBar!==0 && status===0? 'Loading Page':''}
+    {status?
+      <button id='previewPdfButton' onClick={() => { pdfFunctions.previewWindow(url); }}>
+        <i className="fa fa-file-pdf-o" aria-hidden="true"></i>
+      </button>
+      :'' 
+    }
   </div>
 );
 
