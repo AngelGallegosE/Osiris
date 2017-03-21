@@ -177,6 +177,12 @@ button[disabled] {
 #progressBar {
     width: 90%;
 }
+#loadTextFile {
+    padding: 0px;
+}
+#labelTextFileButton {
+    padding: 10px 35px;
+}
 
 .file-hover {
   background: red;

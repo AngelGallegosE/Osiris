@@ -201,16 +201,12 @@ export default class ToPDF extends React.Component {
             </button>
           </div>
           <div className="unselectable box">
-            <button>
-              <label htmlFor="file-input">
+            <button id="loadTextFile">
+              <label htmlFor="file-input" id="labelTextFileButton" labelTextFileButton>
                 <i className="fa fa-upload" aria-hidden="true"></i> Load Textfile links
                 <input id="file-input" type="file" onChange={this.readFile}/>
               </label>
             </button>
-            <label htmlFor="file-input" className="">
-              <i className="fa fa-upload" aria-hidden="true"></i> Load Textfile links
-              <input id="file-input" type="file" onChange={this.readFile}/>
-            </label>
           </div>
           <ProgressBar value={this.state.progressBar} />
           <div className="linkStatus">
