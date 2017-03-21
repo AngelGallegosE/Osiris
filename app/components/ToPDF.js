@@ -12,6 +12,9 @@ window.ondragover = (e) => {
 window.ondrop = (e) => {
   e.preventDefault();
   $('body').removeClass('file-hover');
+  if(e.dataTransfer.getData('Text')) {
+    return FileStore.setAll(e.dataTransfer.getData('Text'));
+  }
   Array.from(e.dataTransfer.files).forEach(async ({path}) => {
     const data = await pdfFunctions.readFile(path);
     FileStore.setAll(data);
