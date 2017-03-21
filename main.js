@@ -22,6 +22,7 @@ function createWindow () {
   // Create the browser window.
 
   mainWindow = new BrowserWindow({
+    backgroundColor: '#ECF0F1',
     width: 800,
     height: 600,
     resizable: true,
