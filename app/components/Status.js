@@ -6,8 +6,8 @@ const Status = ({url, title, validUrl, working, status, progressBar}) => (
       {title} 
     </a> - 
     {validUrl?
-      <i data-tooltip='Valid Link' className="fa fa-check greenIconColor" aria-hidden="true"> </i>:
-      <i data-tooltip='Invalid Link' className="fa fa-ban redIconColor" aria-hidden="true"> </i>
+      <i data-tooltip='Valid Link' className="fa fa-check greenIconColor tooltip" aria-hidden="true"> </i>:
+      <i data-tooltip='Invalid Link' className="fa fa-ban redIconColor tooltip" aria-hidden="true"> </i>
     }
     <div className={progressBar!==0?status==1 ? 'greenStatus' : 'redStatus':''}></div>
     {validUrl && progressBar!==0 && status===0? 'Loading Page':''}
