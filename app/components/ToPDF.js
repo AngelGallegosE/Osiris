@@ -106,14 +106,14 @@ export default class ToPDF extends React.Component {
     return urls.split('\n').map(e=>e.replace(/ /g, '')).filter(e=>e!=='').join('\n');
   }
 
-  getPDF() {
+  async getPDF() {
     document.body.classList.add('busy');
     this.setPDFButtonStatus(false);
     pdfFunctions.setProgressBar(0.001);
+    this.updateArrayDomains();
     this.setState({
       progressBar: 0.1,
-    }, () => {
-      this.updateArrayDomains();
+    }, async () => {
       const numberOfValidUrls = this.state.urls.split('\n').filter(e=>this.isValidURL(e)).length;
       let linksDownloaded = 0;
       if (this.state.urls != '') {
@@ -121,32 +121,33 @@ export default class ToPDF extends React.Component {
           working: 'Loading page'
         });
 
+        await pdfFunctions.initialiceInstance();
+
         const promises = this.state.urls.split('\n').filter(url => this.isValidURL(url)).map((url, index) => {
-          return new Promise((res) => {
-            pdfFunctions.toPDF(url.replace(/ /g, '')).then(() => {
-              let final = this.state.arrayDomains;
+          return new Promise(async (res) => {
+            await pdfFunctions.toPDF(url.replace(/ /g, ''));
+            this.setState((prevState) => {
+              const final = prevState.arrayDomains;
               final[index].status = 1;
               linksDownloaded++;
               this.setProgressBar(linksDownloaded, numberOfValidUrls);
-              this.setState({
+              return {
                 arrayDomains: final,
                 working: '',
-              });
-              res();
-            });
+              };
+            }, res);
           });
         });
 
-        Promise.all(promises).then(() => {
-          this.setPDFButtonStatus(true);
-          document.body.classList.remove('busy');
-          new Notification('Ready!', {
-            title: 'Ready',
-            body: 'Your pdfs are ready!'
-          });
+        await Promise.all(promises);
+        this.setPDFButtonStatus(true);
+        document.body.classList.remove('busy');
+        new Notification('Ready!', {
+          title: 'Ready',
+          body: 'Your pdfs are ready!'
         });
 
-        FileStore.setAll(this.state.urls);
+        await pdfFunctions.destroyInstance();
       }
     });
   }
