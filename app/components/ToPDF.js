@@ -164,8 +164,11 @@ export default class ToPDF extends React.Component {
           <button onClick={this.inputClean} disabled={!this.state.pdfButtonStatus}><i className="fa fa-eraser" aria-hidden="true"></i> Clear</button>
         </div>
         <div>
-          <div className="unselectable">
+          <div className="unselectable box">
             <button onClick={this.openDownloads}><i className="fa fa-folder-open" aria-hidden="true"></i> Open Download Folder</button>
+          </div>
+          <div className="unselectable box">
+            <button><i className="fa fa-upload" aria-hidden="true"></i> Load Textfile links</button>
           </div>
           <ProgressBar value={this.state.progressBar} />
           <div className="linkStatus">
