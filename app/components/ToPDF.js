@@ -1,4 +1,5 @@
 import React from 'react';
+import async from 'async';
 import Status from './Status';
 import ProgressBar from './ProgressBar';
 import FileStore from '../stores/FileStore';
@@ -148,7 +149,7 @@ export default class ToPDF extends React.Component {
         await pdfFunctions.initialiceInstance();
 
         const promises = this.state.urls.split('\n').filter(url => this.isValidURL(url)).map((url, index) => {
-          return new Promise(async (res) => {
+          return async () => {
             await pdfFunctions.toPDF(url.replace(/ /g, ''));
             this.setState((prevState) => {
               const final = prevState.arrayDomains;
@@ -159,19 +160,23 @@ export default class ToPDF extends React.Component {
                 arrayDomains: final,
                 working: '',
               };
-            }, res);
+            });
+          };
+        });
+
+        async.eachSeries(promises, async (p, cb) => {
+          await p();
+          cb();
+        }, async () => {
+          this.setPDFButtonStatus(true);
+          document.body.classList.remove('busy');
+          new Notification('Ready!', {
+            title: 'Ready',
+            body: 'Your pdfs are ready!'
           });
-        });
 
-        await Promise.all(promises);
-        this.setPDFButtonStatus(true);
-        document.body.classList.remove('busy');
-        new Notification('Ready!', {
-          title: 'Ready',
-          body: 'Your pdfs are ready!'
+          await pdfFunctions.destroyInstance();
         });
-
-        await pdfFunctions.destroyInstance();
       }
     });
   }
@@ -202,7 +207,7 @@ export default class ToPDF extends React.Component {
           </div>
           <div className="unselectable box">
             <button id="loadTextFile">
-              <label htmlFor="file-input" id="labelTextFileButton" labelTextFileButton>
+              <label htmlFor="file-input" id="labelTextFileButton">
                 <i className="fa fa-upload" aria-hidden="true"></i> Load Textfile links
                 <input id="file-input" type="file" onChange={this.readFile}/>
               </label>

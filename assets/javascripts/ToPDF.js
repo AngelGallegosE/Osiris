@@ -15,7 +15,7 @@ window.pdfFunctions = (function(){
       const page = await instance.createPage();
       await page.property('viewportSize', {width: 1024, height: 600});
       await page.open(url);
-      await page.render(path.join(pathDownloads, `${nameFile}.pdf`));
+      await page.render(path.join(pathDownloads, `${nameFile}.pdf`), {format: 'pdf', quality: '100'});
       app.addRecentDocument(path.join(pathDownloads, `${nameFile}.pdf`));
     },
     initialiceInstance: async function() {
