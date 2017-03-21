@@ -3,6 +3,27 @@ import Status from './Status';
 import ProgressBar from './ProgressBar';
 import FileStore from '../stores/FileStore';
 
+window.ondragover = (e) => {
+  $('body').addClass('file-hover');
+  e.preventDefault();
+  return false;
+};
+
+window.ondrop = (e) => {
+  e.preventDefault();
+  $('body').removeClass('file-hover');
+  Array.from(e.dataTransfer.files).forEach(async ({path}) => {
+    const data = await pdfFunctions.readFile(path);
+    FileStore.setAll(data);
+  });
+  return false;
+};
+
+window.ondragleave =  () => {
+  $('body').removeClass('file-hover');
+  return false;
+};
+
 export default class ToPDF extends React.Component {
   constructor(props) {
     super(props);
@@ -152,6 +173,13 @@ export default class ToPDF extends React.Component {
     });
   }
 
+  async readFile(e) {
+    Array.from(e.target.files).forEach(async ({path}) => {
+      const data = await pdfFunctions.readFile(path);
+      FileStore.setAll(data);
+    });
+  }
+
   render() {
     let domains = this.state.arrayDomains.map((domain, index) => <Status title={domain.url} status={domain.status} progressBar={this.state.progressBar} key={index} working={this.state.working} validUrl={this.isValidURL(this.state.urls.split('\n')[index])} url={this.state.urls.split('\n')[index]} />);
     return (
@@ -165,10 +193,21 @@ export default class ToPDF extends React.Component {
         </div>
         <div>
           <div className="unselectable box">
-            <button onClick={this.openDownloads}><i className="fa fa-folder-open" aria-hidden="true"></i> Open Download Folder</button>
+            <button onClick={this.openDownloads}>
+              <i className="fa fa-folder-open" aria-hidden="true" /> Open Download Folder
+            </button>
           </div>
           <div className="unselectable box">
-            <button><i className="fa fa-upload" aria-hidden="true"></i> Load Textfile links</button>
+            <button>
+              <label htmlFor="file-input">
+                <i className="fa fa-upload" aria-hidden="true"></i> Load Textfile links
+                <input id="file-input" type="file" onChange={this.readFile}/>
+              </label>
+            </button>
+            <label htmlFor="file-input" className="">
+              <i className="fa fa-upload" aria-hidden="true"></i> Load Textfile links
+              <input id="file-input" type="file" onChange={this.readFile}/>
+            </label>
           </div>
           <ProgressBar value={this.state.progressBar} />
           <div className="linkStatus">

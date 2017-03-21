@@ -131,7 +131,7 @@ button[disabled] {
     display: inline-block;
 }
 .linkStatus {
-    overflow-y: scroll; 
+    overflow-y: scroll;
     height:170px;
 }
 .unselectable {
@@ -177,3 +177,31 @@ button[disabled] {
 #progressBar {
     width: 90%;
 }
+
+.file-hover {
+  background: red;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.custom-file-upload {
+    border: 1px solid #ccc;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin-top: 15px;
+    display: inline-block;
+    vertical-align: top;
+    width: 30%;
+    text-align: center;
+}
+
+label {
+  display: inline-block;
+}
+
+label:hover {
+    cursor: pointer
+}
+
