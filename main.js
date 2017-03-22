@@ -27,7 +27,9 @@ function createWindow () {
     backgroundColor: '#ECF0F1',
     width: 800,
     height: 600,
-    resizable: true,
+    resizable: false,
+    fullscreen: false,
+    fullscreenable: false,
     title: 'Osiris',
   });
 

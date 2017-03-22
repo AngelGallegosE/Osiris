@@ -8,7 +8,9 @@
     "dev": "npm run compile && concurrently --kill-others \"npm run watch\" \"npm start\"",
     "watch": "watchify app/App.js -t babelify -o bundle.js --debug --verbose",
     "compile": "browserify app/App.js -t babelify -o bundle.js --debug --verbose",
-    "linter": "node ./node_modules/eslint/bin/eslint.js app --ext .js  --cache --env jquery"
+    "linter": "node ./node_modules/eslint/bin/eslint.js app --ext .js  --cache --env jquery",
+    "build": "electron-packager . Osiris",
+    "buildAll": "electron-packager . Osiris --all"
   },
   "repository": "https://github.com/electron/electron-quick-start",
   "keywords": [
