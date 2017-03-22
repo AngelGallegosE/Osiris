@@ -35,7 +35,7 @@ function createWindow () {
     {
       label: 'Open Download Folder',
       click: () => {
-        shell.openExternal(`file://${path.join(app.getPath('downloads'), 'Osiris')}`);
+        shell.openExternal(`file://${path.join(app.getPath('downloads'), 'Osiris_Downloads')}`);
       }
     },
   ]);

@@ -4,7 +4,7 @@ const path = require('path');
 const fs = require('fs');
 const phantom = require('phantom');
 
-const pathDownloads = path.join(app.getPath('downloads'), 'Osiris');
+const pathDownloads = path.join(app.getPath('downloads'), 'Osiris_Downloads');
 
 window.pdfFunctions = (function(){
   return {

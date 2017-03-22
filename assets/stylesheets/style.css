@@ -186,7 +186,8 @@ button[disabled] {
 }
 
 .file-hover {
-  background: red;
+  border-style: solid;
+  border-color: #2e2c29;
 }
 
 input[type="file"] {
