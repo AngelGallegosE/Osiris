@@ -22,4 +22,16 @@ npm install
 npm run dev
 ```
 
+## To Package app
+
+```bash
+# Build for your platform
+npm run build
+
+# Build for all platforms
+npm run buildAll
+```
+
+**Note: Your need Wine if you wanna build for Window in a not Window platform. See https://github.com/electron-userland/electron-packager#building-windows-apps-from-non-windows-platforms for details.**
+
 #### License [CC0 1.0 (Public Domain)](LICENSE.md)
