@@ -1,7 +1,6 @@
-const electron = require('electron');
 const {app, Menu, BrowserWindow, shell} = require('electron');
 const PDFWindow = require('electron-pdf-window');
-
+const isDev = require('electron-is-dev');
 const path = require('path');
 const url = require('url');
 
@@ -14,7 +13,7 @@ require('electron-context-menu')({
   }]
 });
 
-require('electron-reload')(__dirname + '/bundle.js');
+if(isDev) require('electron-reload')(__dirname + '/bundle.js');
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
