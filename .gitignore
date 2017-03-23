@@ -8,4 +8,5 @@ bundle.js
 logs
 *.log
 npm-debug.log*
-Osiris-linux-ia32
+Osiris-linux-ia32/
+Osiris-darwin-x64/
