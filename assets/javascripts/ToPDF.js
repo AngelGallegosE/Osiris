@@ -3,8 +3,11 @@ const app = require('electron').remote.app;
 const path = require('path');
 const fs = require('fs');
 const phantom = require('phantom');
+const isDev = require('electron-is-dev');
 
 const pathDownloads = path.join(app.getPath('downloads'), 'Osiris_Downloads');
+
+window.isDev = isDev;
 
 window.pdfFunctions = (function(){
   return {
