@@ -12,13 +12,16 @@ a:link {
 a:hover {
     text-decoration: underline;
 }
+
 body {
-    background-color: #ECF0F1;
-    font-family: 'Helvetica Neue', sans-serif;
 }
 
 body.busy {
     cursor: progress
+}
+
+nav a {
+    color: white;
 }
 
 button {
@@ -33,36 +36,6 @@ button {
     border-radius: 5px;
     background: #00303E;
     padding: 10px 35px;
-}
-*[data-tooltip] {
-    position: relative;
-}
-
-*[data-tooltip]::after {
-    content: attr(data-tooltip);
-    position: fixed;
-    width: 50px;
-
-    pointer-events: none;
-    opacity: 0;
-    -webkit-transition: opacity .15s ease-in-out;
-    -moz-transition: opacity .15s ease-in-out;
-    -ms-transition: opacity .15s ease-in-out;
-    -o-transition: opacity .15s ease-in-out;
-    transition: opacity .15s ease-in-out;
-
-    display: block;
-    font-size: 10px;
-    line-height: 16px;
-    background: #C1D1DE;
-    padding: 1px 1px;
-    border: 1px solid #C1D1DE;
-    box-shadow: 2px 4px 5px rgba(0, 0, 0, 0.4);
-    color: #00303E;
-}
-
-*[data-tooltip]:hover::after {
-    opacity: 1;
 }
 button:hover {
     background-color: #7096AD;
@@ -109,18 +82,21 @@ button[disabled] {
 }
 
 .buttons {
-    margin-top: 15px;
     display: inline-block;
     vertical-align: top;
-    width: 30%;
-    text-align: center;
 }
 
 .links {
-    display: inline-block;
-    width: 70%;
+    display: block;
+    width: 100%;
     padding-left: 15px;
     box-sizing: border-box;
+    margin-top: 20px;
+}
+
+.links textarea {
+    height: 100px;
+    max-height: 100px;
 }
 
 .status {
@@ -153,8 +129,6 @@ button[disabled] {
 
 #logo {
     text-align: center;
-    background-color: #ECF0F1;
-    color: #272F32;
     margin: auto;
     width: 50%;
     height: 60px;
@@ -162,7 +136,6 @@ button[disabled] {
 }
 
 #logo>h1 {
-    color: #272F32;
     font-size: 65px;
     font-weight: bold;
     letter-spacing: -1px;
@@ -213,7 +186,7 @@ label:hover {
     cursor: pointer
 }
 
-#previewPdfButton{
+#previewPdfButton {
     -webkit-transition-duration: 0.4s;
     transition-duration: 0.4s;
     cursor: pointer;
@@ -226,3 +199,13 @@ label:hover {
     background: #00303E;
     padding: 2px 4px 3px 4px;
 }
+
+textarea {
+    background: white !important;
+}
+
+.fixed-action-btn ul li i{
+    height: 43px;
+    line-height: 43px;
+}
+

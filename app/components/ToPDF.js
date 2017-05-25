@@ -188,34 +188,52 @@ export default class ToPDF extends React.Component {
     });
   }
 
+  triggerFileInput(ev) {
+    ev.stopPropagation();
+    $('#file-input').click();
+  }
+
   render() {
-    let domains = this.state.arrayDomains.map((domain, index) => <Status title={domain.url} status={domain.status} progressBar={this.state.progressBar} key={index} working={this.state.working} validUrl={this.isValidURL(this.state.urls.split('\n')[index])} url={this.state.urls.split('\n')[index]} />);
+    let domains = this.state.arrayDomains.map((domain, index) =>
+      <Status title={domain.url} status={domain.status} progressBar={this.state.progressBar} key={index} working={this.state.working} validUrl={this.isValidURL(this.state.urls.split('\n')[index])} url={this.state.urls.split('\n')[index]} />
+    );
+
     return (
-      <div id="container" >
+      <div id="container blue lighten-5" >
+        <nav>
+          <div className="nav-wrapper">
+            <span className="brand-logo center">Osiris</span>
+            <div className="fixed-action-btn horizontal click-to-toggle">
+              <a className="btn-floating btn-large red">
+                <i className="material-icons">menu</i>
+              </a>
+              <ul>
+                <li data-tooltip="Clear" data-position="top" className="tooltipped">
+                  <a className="btn-floating red" onClick={this.inputClean}><i className="fa fa-eraser"></i></a>
+                </li>
+                <li data-tooltip="Open Download Folder" data-position="top" className="tooltipped">
+                  <a className="btn-floating yellow darken-1" onClick={this.openDownloads}><i className="fa fa-folder-open"></i></a>
+                </li>
+                <li data-tooltip="Load Textfile Links" data-position="top" className="tooltipped">
+                  <a className="btn-floating green" onClick={this.triggerFileInput}><i className="fa fa-upload"></i></a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+
         <div className="links">
-          <textarea id="urls" rows="10" onBlur={this.textareaOnBlur} onChange={this.inputChange} value={this.state.urls} className="textarea"></textarea>
+          <textarea id="urls" rows="10" onBlur={this.textareaOnBlur} onChange={this.inputChange} value={this.state.urls} className="materialize-textarea"></textarea>
         </div>
         <div className="buttons unselectable">
           <button id="pdf" className="waves-effect waves-light btn" disabled={!this.state.pdfButtonStatus} onClick={this.getPDF}><i className="fa fa-download" aria-hidden="true"></i> Get pdf</button>
-          <button onClick={this.inputClean} className="waves-effect waves-light btn" disabled={!this.state.pdfButtonStatus}><i className="fa fa-eraser" aria-hidden="true"></i> Clear</button>
         </div>
         <div>
-          <div className="unselectable box">
-            <button className="waves-effect waves-light btn" onClick={this.openDownloads}>
-              <i className="fa fa-folder-open" aria-hidden="true" /> Open Download Folder
-            </button>
-          </div>
-          <div className="unselectable box">
-            <button id="loadTextFile">
-              <label htmlFor="file-input" id="labelTextFileButton">
-                <i className="fa fa-upload" aria-hidden="true"></i> Load Textfile links
-                <input id="file-input" type="file" onChange={this.readFile}/>
-              </label>
-            </button>
-          </div>
           <ProgressBar value={this.state.progressBar} />
           <div className="linkStatus">
+          <ul className="collection">
             {domains}
+          </ul>
           </div>
         </div>
       </div>

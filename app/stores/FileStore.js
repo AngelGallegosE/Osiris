@@ -5,7 +5,7 @@ var register_errors = null;
 class UrlStore extends EventEmitter {
   constructor() {
     super();
-    this.urls = isDev ? 'http://noelrock333.github.io/\nhttp://stackoverflow.com/questions/42702291/mongoose-multiple-3-level-deep-population' : '';
+    this.urls = isDev ? 'http://noelrock333.github.io/\nhttps://electron.atom.io/' : '';
   }
   emitChange() {
     this.emit(CHANGE_EVENT);
