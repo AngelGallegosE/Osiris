@@ -3,16 +3,22 @@
   <head>
     <meta charset="UTF-8">
     <title>Osiris</title>
-    <link rel="stylesheet" href="assets/stylesheets/style.css">
-    <link rel="stylesheet" href="assets/stylesheets/font-awesome.min.css">
-    <script src="assets/javascripts/jquery-3.1.1.slim.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="assets/css/materialize.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+    <script src="assets/js/jquery-3.2.1.min.js" onload="window.$ = window.jQuery = module.exports;"></script>
+    <script src="assets/js/hammer.min.js"></script>
+    <script src="assets/js/materialize.min.js"></script>
+
   </head>
   <body>
     <div id="content"></div>
   </body>
   <script>
     require('./renderer.js')
-    require('./assets/javascripts/ToPDF.js')
+    require('./assets/js/ToPDF.js')
     require('./bundle.js')
   </script>
 </html>
